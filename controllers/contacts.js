@@ -15,11 +15,11 @@ const getAll = async (_, res) => {
 };
 
 const getById = async (req, res) => {
-  const id = req.params.contactId;
+  const { id } = req.params;
   const respond = await getContactById(id);
 
   if (!respond) {
-    HttpError(404, "Not found!");
+    HttpError(404, { message: "Not found!" });
   }
 
   res.json(respond);
@@ -33,26 +33,26 @@ const add = async (req, res) => {
 };
 
 const put = async (req, res) => {
-  const id = req.params.contactId;
+  const { id } = req.params;
   const body = req.body;
   const respond = await replaceContact(id, body);
 
   if (!respond) {
-    HttpError(404, "Not found!");
+    HttpError(404, { message: "Not found!" });
   }
 
   res.json(respond);
 };
 
 const remove = async (req, res) => {
-  const id = req.params.contactId;
+  const { id } = req.params;
   const respond = await removeContact(id);
 
   if (!respond) {
-    HttpError(404, "Not found!");
+    HttpError(404, { message: "Not found!" });
   }
 
-  res.status(204).send();
+  res.json({ message: "contact deleted" });
 };
 
 module.exports = {
