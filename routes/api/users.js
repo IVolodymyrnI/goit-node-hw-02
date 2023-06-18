@@ -8,8 +8,10 @@ const {
   current,
   logout,
   updateSubscription,
+  updateAvatar,
 } = require("../../controllers/users/index");
 const authenticate = require("../../middleware/authenticate");
+const updalod = require("../../middleware/upload");
 
 const router = express.Router();
 
@@ -17,6 +19,12 @@ router.post("/users/signup", validateData(schemas.usersRegister), register);
 router.post("/users/login", validateData(schemas.usersLogin), login);
 router.post("/users/current", authenticate, current);
 router.post("/users/logout", authenticate, logout);
+router.patch(
+  "/users/avatar",
+  authenticate,
+  updalod.single("avatar"),
+  updateAvatar
+);
 
 router.patch(
   "/users",
