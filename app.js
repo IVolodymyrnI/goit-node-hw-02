@@ -29,15 +29,3 @@ app.use((err, req, res, next) => {
 });
 
 module.exports = app;
-let counter = 0;
-let newValue = counter++ * 2;
-console.log(newValue);
-
-const objt = {
-  showTihs: () => {
-    console.dir(this);
-  },
-};
-
-objt.showTihs();
-Promise.reject("Error").finally(console.log).catch(console.log);

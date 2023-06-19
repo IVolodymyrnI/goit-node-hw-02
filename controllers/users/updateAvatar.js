@@ -1,18 +1,19 @@
-const path = require("node:path");
+const path = require("path");
 const fs = require("fs/promises");
 const { ctrlWrapper } = require("../../utils/ctrlWrapper");
 const { Users } = require("../../models/users");
 
-const publicDir = path.join(__dirname, "../../", "public");
+const publicDirPath = path.join(__dirname, "../../", "public");
 
 async function updateAvatar(req, res) {
   try {
-    console.log(req.file);
     const { _id } = req.user;
-    const { path: originalPath, originalName } = req.file;
-    const fileName = `${_id}_${originalName}`;
-    const avatarURL = path.join(publicDir, fileName);
-    await fs.rename(originalPath, avatarURL);
+    const { path: tempDirPath, originalname } = req.file;
+    const fileName = `${_id}_${originalname}`;
+    const newAvatarPath = path.join(publicDirPath, "avatars", fileName);
+    const avatarURL = path.join("avatars", fileName);
+
+    await fs.rename(tempDirPath, newAvatarPath);
     await Users.findByIdAndUpdate(_id, { avatarURL });
 
     res.json({ avatarURL });

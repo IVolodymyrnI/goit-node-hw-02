@@ -6,10 +6,10 @@ const tempDir = path.join(__dirname, "temp");
 const storage = multer.diskStorage({
   destination: tempDir,
   filename: (req, file, cb) => {
-    cb(null, file.originalName);
+    cb(null, file.originalname);
   },
 });
 
-const updalod = multer(storage);
+const upload = multer({ storage });
 
-module.exports = updalod;
+module.exports = upload;

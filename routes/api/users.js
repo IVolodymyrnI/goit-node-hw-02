@@ -11,7 +11,7 @@ const {
   updateAvatar,
 } = require("../../controllers/users/index");
 const authenticate = require("../../middleware/authenticate");
-const updalod = require("../../middleware/upload");
+const upload = require("../../middleware/upload");
 
 const router = express.Router();
 
@@ -22,7 +22,7 @@ router.post("/users/logout", authenticate, logout);
 router.patch(
   "/users/avatar",
   authenticate,
-  updalod.single("avatar"),
+  upload.single("avatar"),
   updateAvatar
 );
 
