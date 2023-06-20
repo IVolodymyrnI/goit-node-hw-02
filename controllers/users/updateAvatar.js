@@ -8,12 +8,12 @@ const publicDirPath = path.join(__dirname, "../../", "public");
 async function updateAvatar(req, res) {
   try {
     const { _id } = req.user;
-    const { path: tempDirPath, originalname } = req.file;
+    const { path: tempUpload, originalname } = req.file;
     const fileName = `${_id}_${originalname}`;
-    const newAvatarPath = path.join(publicDirPath, "avatars", fileName);
+    const resultDir = path.join(publicDirPath, "avatars", fileName);
     const avatarURL = path.join("avatars", fileName);
 
-    await fs.rename(tempDirPath, newAvatarPath);
+    await fs.rename(tempUpload, resultDir);
     await Users.findByIdAndUpdate(_id, { avatarURL });
 
     res.json({ avatarURL });

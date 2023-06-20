@@ -9,11 +9,11 @@ async function authenticate(req, _, next) {
   const { authorization = "" } = req.headers;
   const [bearer, token] = authorization.split(" ");
 
-  if (bearer !== "Bearer") {
-    next(HttpError(401));
-  }
-
   try {
+    if (bearer !== "Bearer" || token === undefined) {
+      HttpError(401);
+    }
+
     const { id } = jwt.verify(token, SECRET_KEY);
     const user = await Users.findById(id);
 
